@@ -1,4 +1,0 @@
-# Concatenate two strings
-
-Statement = Name + "is the best"
-Statement
