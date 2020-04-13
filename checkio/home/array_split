@@ -25,6 +25,10 @@ def split_list(items: list) -> list:
     mid = (len(items) + 1) // 2
     return [items[:mid], items[mid:]]
 
+3
 if __name__ == '__main__':
     print("Example:")
     print(split_list([1, 2, 3, 4, 5,6,7]))
+def split_list(items):
+    x = (len(items)+1) // 2
+    return [items[:x], items[x:]]
