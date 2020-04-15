@@ -1,0 +1,17 @@
+def days_diff(a, b):
+    from datetime import date, timedelta
+    t1=a
+    t2=b
+    result=abs(date(t2[0],t2[1],t2[2])-date(t1[0],t1[1],t1[2]))
+    return result.days
+
+
+if __name__ == '__main__':
+    print("Example:")
+    print(days_diff((1982, 4, 19), (1982, 4, 22)))
+
+    # These "asserts" are used for self-checking and not for an auto-testing
+    assert days_diff((1982, 4, 19), (1982, 4, 22)) == 3
+    assert days_diff((2014, 1, 1), (2014, 8, 27)) == 238
+    assert days_diff((2014, 8, 27), (2014, 1, 1)) == 238
+    print("Coding complete? Click 'Check' to earn cool rewards!")
