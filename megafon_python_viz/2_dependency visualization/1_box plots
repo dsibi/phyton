@@ -1,1 +1,21 @@
-ssss
+import pandas as pd
+import matplotlib.pyplot as plt
+#Import seaborn lib for more difficutl types of viz
+#with less code lines and more illustrative color schemas
+import seaborn as sns
+#Set size of the artboard without it's creating
+from matplotlib import rcParams
+#Enlarge font size for seaborn
+rcParams['figure.figsize']=12,10
+sns.set_context('paper',font_scale=2)
+data=pd.read_csv("https://video.ittensive.com/python-advanced/data-9722-2019-10-14.utf.csv", delimiter=";")
+#Leave one word for AdmArea
+data['AdmArea']=data['AdmArea'].apply(lambda x:x.split(' ')[0])
+sns.distplot(data['PASSES_OVER_220']).set(xlabel='',ylabel='',title='Straight-A student by schools')
+#Build bee swarm plot
+sns.swarmplot(x='PASSES_OVER_220',y='AdmArea',data=data).set(xlabel='',ylabel='',title='Straight-A student by areas')
+#Build violin plot with set cut-parameter
+sns.violinplot(x='PASSER_UNDER_160',y='AdmArea',data=data,cut=0)
+plt.xlabel('')
+plt.ylabel('')
+plt.title('Straight-B student by areas')
