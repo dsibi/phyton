@@ -1,0 +1,23 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+#Import seaborn lib for more difficutl types of viz
+#with less code lines and more illustrative color schemas
+import seaborn as sns
+import scipy.stats as stats
+
+def convert_time(a):
+    """Get Seconds from time."""
+    h, m, s = a.split(':')
+    return int(h) * 3600 + int(m) * 60 + int(s)
+    
+#Set size of the artboard without it's creating
+from matplotlib import rcParams
+#Enlarge font size for seaborn
+rcParams['figure.figsize']=12,10
+sns.set_context('paper',font_scale=2)
+data=pd.read_csv("https://video.ittensive.com/python-advanced/marathon-data.csv", delimiter=",")
+data['split']=data['split'].apply(convert_time)
+data['final']=data['final'].apply(convert_time)
+sns.pairplot(data,hue='gender',height=5)
+#sns.jointplot('split','final',data,height=12,kind='kde').annotate(stats.pearsonr)
+print(round(stats.pearsonr(data['split'],data['final'])[0],2))
