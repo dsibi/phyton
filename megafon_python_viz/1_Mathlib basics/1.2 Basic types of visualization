@@ -1,0 +1,33 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data = pd.read_csv("http://video.ittensive.com/python-advanced/data-5283-2019-10-04.utf.csv", delimiter=";")
+data["Month"] = data["Month"].str.slice(0,3).str.upper()
+data["AdmArea"] = data["AdmArea"].apply(lambda x: x.split(" ")[0])
+#data["AdmArea"] = data["AdmArea"].apply(lambda x:x["Calls"].count()>2)
+years = data.groupby("Year").mean()["Calls"]
+fig = plt.figure(figsize=(12,12))
+area = fig.add_subplot(2,2,1)
+years.plot.line(ax=area, label="Calls")
+area.legend()
+plt.xticks(years.index)
+
+area = fig.add_subplot(2,2,2)
+months = data.groupby("Month").mean()["Calls"]
+months = months.reindex(["ЯНВ","ФЕВ","МАР","АПР","МАЙ","ИЮН","ИЮЛ","АВГ","СЕН","ОКТ","НОЯ","ДЕК"])
+months.plot.area(ax=area, label="Calls", color="yellow")
+area.legend()
+j=0
+for i in months:
+    area.annotate(round(i),xy=(j-0.35,i*1.01))
+    j +=1
+area =fig.add_subplot(2,2,3)
+months.plot.bar(ax=area, label="", color=["#3068B2","#990033"])
+
+area = fig.add_subplot(2,2,4)
+adm=data.groupby("AdmArea").filter(lambda x:x["Calls"].count()>2)
+adm=data.groupby("AdmArea").mean()["Calls"]
+total=sum(adm)
+adm.plot.pie(ax=area, label="", autopct=lambda x:int(total*x/100))
+plt.show()
+print (data.head())
