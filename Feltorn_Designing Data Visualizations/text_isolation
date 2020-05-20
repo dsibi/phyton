@@ -1,0 +1,26 @@
+import plotly.express as px
+import plotly.graph_objs as go
+import pandas as pd
+
+rows=[['501-600','15','122.58333','45.36667'],
+      ['till 500','4','12.5','27.5'],
+      ['more 1001','41','-115.53333','38.08'],
+      ]
+
+colmns=['bins','data','longitude','latitude']
+df=pd.DataFrame(data=rows, columns=colmns)
+df = df.astype({"data": int})
+
+fig=px.scatter_geo(df,lon='longitude', lat='latitude',
+                      color='bins',
+                      opacity=0.5,
+                      size='data',
+                      projection="natural earth", hover_data=(['data']))
+
+fig.add_trace(go.Scattergeo(lon=df["longitude"],
+              lat=df["latitude"],
+              text=df["data"],
+              textposition="middle center",
+              mode='text',
+              showlegend=False))
+fig.show()
